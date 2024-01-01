@@ -1,16 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import List from "./components/List";
 import Details from "./components/Details";
-import { DetailsProps } from "./Types";
+import { DetailsProps, User } from "./Types";
+import Loading from "./components/Loading";
 
 function App() {
-  const [users, setUsers] = useState<{ id: number; name: string }[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [id, setId] = useState<number | undefined>(undefined);
   const [info, setInfo] = useState<DetailsProps | null>(null);
+  let loading = useRef<boolean>(false);
 
   useEffect(() => {
     const usersFetch = async () => {
+      loading.current = true;
       try {
         const response = await fetch(
           `${import.meta.env.VITE_USERS_URL}${id || "users"}.json`
@@ -21,6 +24,7 @@ function App() {
       } catch (e) {
         console.error(e);
       }
+      loading.current = false;
     };
     if (info) setInfo(null);
     usersFetch();
@@ -42,22 +46,8 @@ function App() {
           );
         })}
       </List>
-      {info && (
-        <Details className="details">
-          <img className="avatar" src={info.avatar} alt="image user" />
-          <ul className="details">
-            <li className="detail">
-              <p>{info.details.city}</p>
-            </li>
-            <li className="detail">
-              <p>{info.details.company}</p>
-            </li>
-            <li className="detail">
-              <p>{info.details.position}</p>
-            </li>
-          </ul>
-        </Details>
-      )}
+      {info && <Details className="details" props={info} />}
+      (loading && <Loading className="loading" url={} />)
     </>
   );
 }

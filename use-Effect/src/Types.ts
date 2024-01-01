@@ -3,10 +3,6 @@ export type User = {
   name: string;
 };
 
-export type Users = {
-  users: User[];
-};
-
 export type DetailsProps = {
   id: string;
   name: string;
