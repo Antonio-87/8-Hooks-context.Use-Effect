@@ -8,18 +8,21 @@ const Details = ({
 }: PropsWithChildren<{ className: string; props: DetailsProps }>) => {
   return (
     <section className={className}>
+      {children}
       <img className="avatar" src={props.avatar} alt="image user" />
-      <ul className="details">
+      <ul className="details-list">
         <li className="detail">
-          <p>{props.details.city}</p>
+          <p>{props.name}</p>
         </li>
         <li className="detail">
-          <p>{props.details.company}</p>
+          <p>City: {props.details.city}</p>
         </li>
         <li className="detail">
-          <p>{props.details.position}</p>
+          <p>Company: {props.details.company}</p>
         </li>
-        {children}
+        <li className="detail">
+          <p>Position: {props.details.position}</p>
+        </li>
       </ul>
     </section>
   );

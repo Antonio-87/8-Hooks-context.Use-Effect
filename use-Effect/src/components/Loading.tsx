@@ -7,7 +7,7 @@ const Loading = ({
 }: PropsWithChildren<{ className: string; url: string }>) => {
   return (
     <>
-      <img className={className} src={url} alt="img" />
+      <img className={className} src={url} alt="img Loading" />
       {children}
     </>
   );
